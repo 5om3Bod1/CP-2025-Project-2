@@ -6,25 +6,32 @@ using UnityEngine.SceneManagement;
 
 public class calcScript : MonoBehaviour
 {
+    #region Text
+    private string currentInput = "";
+
     public TextMeshProUGUI displayText;
     public TMP_Text qOne;
     public TMP_Text start;
     public TMP_Text end;
+    #endregion
 
-    private string currentInput = "";
+    #region Challenges
+    public int challenegeDone;
+    public GameObject[] challenegeNum;
+    public GameObject youWin;
+    #endregion
 
-    private double result = 0.0;
-
+    #region Values
     public int operationAmount;
     public int operationReq;
     public int startAmount;
     public int endAmount;
+    
+    private double result = 0.0;
+    #endregion
 
     public bool doubleD;
-
-    public int challenegeDone;
-    public GameObject[] challenegeNum;
-    public GameObject youWin;
+    public bool doubleOpp;
 
     public static calcScript Instance { get; private set; }
 
@@ -33,8 +40,14 @@ public class calcScript : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        doubleOpp = true;
+    }
+
     private void Update()
     {
+        #region Inputs
         if (Input.GetKeyDown("0"))
         {
             currentInput += 0;
@@ -54,6 +67,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("2"))
         {
@@ -64,6 +78,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("3"))
         {
@@ -74,6 +89,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("4"))
         {
@@ -84,6 +100,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("5"))
         {
@@ -94,6 +111,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("6"))
         {
@@ -104,6 +122,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("7"))
         {
@@ -114,6 +133,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("8"))
         {
@@ -124,6 +144,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("9"))
         {
@@ -134,39 +155,58 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("q")) //Add
         {
-            currentInput += "+";
-            updateDisplay();
-            doubleD = false;
-            operationAmount++;
+            if (!doubleOpp)
+            {
+                currentInput += "+";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
+
         }
         else if (Input.GetKeyDown("w")) //Subtract
         {
-            currentInput += "-";
-            updateDisplay();
-            operationAmount++;
-            doubleD = false;
+            if (!doubleOpp)
+            {
+                currentInput += "-";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
         }
         else if (Input.GetKeyDown("e")) //Multiply
         {
-            currentInput += "*";
-            updateDisplay();
-            operationAmount++;
-            doubleD = false;
+            if (!doubleOpp)
+            {
+                currentInput += "*";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
         }
         else if (Input.GetKeyDown("r")) //Divide
         {
-            currentInput += "/";
-            updateDisplay();
-            operationAmount++;
-            doubleD = false;
+            if (!doubleOpp)
+            {
+                currentInput += "/";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
         }
         else if (Input.GetKeyDown("a")) //equal
         {
             calcResult();
             doubleD = false;
+            doubleOpp = true;
 
             if (operationAmount != operationReq)
             {
@@ -197,9 +237,11 @@ public class calcScript : MonoBehaviour
             clearInput();
             operationAmount = 0;
             doubleD = false;
+            doubleOpp = false;
         }
 
         qOne.text = operationAmount.ToString();
+        #endregion
     }
 
     public void calcResult()

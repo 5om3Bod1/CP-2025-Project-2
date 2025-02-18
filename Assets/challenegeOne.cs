@@ -10,7 +10,7 @@ public class challenegeOne : MonoBehaviour
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
-        calcScript.Instance.operationReq = 4;
+        calcScript.Instance.operationReq = 5;
         startNum = Random.Range(0, 10);
         endNum = Random.Range(0, 10);
 
