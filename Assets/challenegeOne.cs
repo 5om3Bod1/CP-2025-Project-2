@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class challenegeOne : MonoBehaviour
 {
+    //Anything goes and 5 inputs
+
     public int startNum;
     public int endNum;
-
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;

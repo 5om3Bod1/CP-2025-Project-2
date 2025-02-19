@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class challenegeThree : MonoBehaviour
+public class challengeFour : MonoBehaviour
 {
-    //Can't add or divide and 9 inputs
+    //Can't subtract or multiply and 9 inputs
 
     public int startNum;
     public int endNum;
@@ -22,12 +22,12 @@ public class challenegeThree : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown("q")) //Add
+        if (Input.GetKeyDown("w")) //Subtract
         {
             calcScript.Instance.loseCon = true;
             Debug.Log("Complete");
         }
-        else if (Input.GetKeyDown("r")) //Divide
+        else if (Input.GetKeyDown("e")) //Multiply
         {
             calcScript.Instance.loseCon = true;
             Debug.Log("Complete");

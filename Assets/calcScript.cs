@@ -34,6 +34,7 @@ public class calcScript : MonoBehaviour
     public bool doubleOpp; //Double opperations, Ex: +-
 
     public bool winCon;
+    public bool loseCon;
 
     public static calcScript Instance { get; private set; }
 
@@ -60,6 +61,7 @@ public class calcScript : MonoBehaviour
                 operationAmount++;
                 doubleD = true;
             }
+            doubleOpp = false;
         }
         else if (Input.GetKeyDown("1"))
         {
@@ -161,6 +163,7 @@ public class calcScript : MonoBehaviour
             doubleOpp = false;
         }
         #endregion
+        #region Opperations
         else if (Input.GetKeyDown("q")) //Add
         {
             if (!doubleOpp)
@@ -206,43 +209,67 @@ public class calcScript : MonoBehaviour
                 doubleOpp = true;
             }
         }
+        #endregion
+        #region Other
         else if (Input.GetKeyDown("a")) //equal
         {
             calcResult();
             doubleD = false;
             doubleOpp = true;
 
-            if ((operationAmount != operationReq) || (winCon == false))
+            if (operationAmount != operationReq || winCon == false || loseCon == true)
             {
-                Invoke("tryAgain", 2f);
+                Invoke("clearInput", 1f);
             }
-            else if(operationAmount == operationReq && challenegeDone == 0 && result == endAmount) //Challenege #1 Done
+            else if(challenegeDone == 0 && result == endAmount) //Challenege #1 Done
             {
                 challenegeNum[0].SetActive(false);
                 challenegeNum[1].SetActive(true);
                 challenegeDone++;
                 clearInput();
             }
-            else if(operationAmount == operationReq && challenegeDone == 1 && result == endAmount && winCon == true) //Challenege #2 Done
+            else if(challenegeDone == 1 && result == endAmount && winCon == true) //Challenege #2 Done
             {
                 challenegeNum[1].SetActive(false);
                 challenegeNum[2].SetActive(true);
                 challenegeDone++;
                 clearInput();
             }
-            else if (operationAmount == operationReq && challenegeDone == 2 && result == endAmount) //Challenege #3 Done
+            else if (challenegeDone == 2 && result == endAmount && loseCon != true) //Challenege #3 Done
             {
-                //Change to Win Screne
-                youWin.SetActive(true);
+                challenegeNum[2].SetActive(false);
+                challenegeNum[3].SetActive(true);
+                challenegeDone++;
+                clearInput();
+            }
+            else if (challenegeDone == 3 && result == endAmount && loseCon != true) //Challenge #4 Done
+            {
+                challenegeNum[3].SetActive(false);
+                challenegeNum[4].SetActive(true);
+                challenegeDone++;
+                clearInput();
+            }
+            else if (challenegeDone == 4 && result == endAmount && winCon != true) //Challenge #5 Done
+            {
+                challenegeNum[3].SetActive(false);
+                challenegeNum[4].SetActive(true);
+                challenegeDone++;
+                clearInput();
             }
         }
         else if (Input.GetKeyDown("s")) //Clear
         {
             clearInput();
-            operationAmount = 0;
         }
 
         qOne.text = operationAmount.ToString();
+        
+
+        if(challenegeDone == 0 || challenegeDone == 2 || challenegeDone == 3) //Make sure the first challenge doesn't need the winCon
+        {
+            winCon = true;
+        }
+        #endregion
         #endregion
     }
 
@@ -262,25 +289,16 @@ public class calcScript : MonoBehaviour
             updateDisplay();
         }
     }
-
-    void tryAgain()
-    {
-        currentInput = "";
-        result = 0.0;
-        updateDisplay();
-        operationAmount = 0;
-        doubleD = false;
-        doubleOpp = false;
-        winCon = false;
-    }
     private void clearInput()
     {
         currentInput = "";
         result = 0.0;
+        operationAmount = 0;
         updateDisplay();
         doubleD = false;
-        doubleOpp = false;
+        doubleOpp = true;
         winCon = false;
+        loseCon = false;
     }
     private void updateDisplay()
     {

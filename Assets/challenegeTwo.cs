@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class challenegeTwo : MonoBehaviour
 {
+    //Must multiply or divide and 7 inputs
+
     public int startNum;
     public int endNum;
-
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
@@ -24,10 +25,12 @@ public class challenegeTwo : MonoBehaviour
         if (Input.GetKeyDown("e")) //Multiply
         {
             calcScript.Instance.winCon = true;
+            Debug.Log("Complete");
         }
         else if (Input.GetKeyDown("r")) //Divide
         {
             calcScript.Instance.winCon = true;
+            Debug.Log("Complete");
         }
     }
 }
