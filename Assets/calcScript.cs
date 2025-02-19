@@ -30,8 +30,10 @@ public class calcScript : MonoBehaviour
     private double result = 0.0;
     #endregion
 
-    public bool doubleD;
-    public bool doubleOpp;
+    public bool doubleD; //Double Digit
+    public bool doubleOpp; //Double opperations, Ex: +-
+
+    public bool winCon;
 
     public static calcScript Instance { get; private set; }
 
@@ -48,6 +50,7 @@ public class calcScript : MonoBehaviour
     private void Update()
     {
         #region Inputs
+        #region Numbers
         if (Input.GetKeyDown("0"))
         {
             currentInput += 0;
@@ -157,6 +160,7 @@ public class calcScript : MonoBehaviour
             }
             doubleOpp = false;
         }
+        #endregion
         else if (Input.GetKeyDown("q")) //Add
         {
             if (!doubleOpp)
@@ -208,7 +212,7 @@ public class calcScript : MonoBehaviour
             doubleD = false;
             doubleOpp = true;
 
-            if (operationAmount != operationReq)
+            if ((operationAmount != operationReq) || (winCon == false))
             {
                 Invoke("tryAgain", 2f);
             }
@@ -219,7 +223,7 @@ public class calcScript : MonoBehaviour
                 challenegeDone++;
                 clearInput();
             }
-            else if(operationAmount == operationReq && challenegeDone == 1 && result == endAmount) //Challenege #2 Done
+            else if(operationAmount == operationReq && challenegeDone == 1 && result == endAmount && winCon == true) //Challenege #2 Done
             {
                 challenegeNum[1].SetActive(false);
                 challenegeNum[2].SetActive(true);
@@ -236,8 +240,6 @@ public class calcScript : MonoBehaviour
         {
             clearInput();
             operationAmount = 0;
-            doubleD = false;
-            doubleOpp = false;
         }
 
         qOne.text = operationAmount.ToString();
@@ -268,12 +270,17 @@ public class calcScript : MonoBehaviour
         updateDisplay();
         operationAmount = 0;
         doubleD = false;
+        doubleOpp = false;
+        winCon = false;
     }
     private void clearInput()
     {
         currentInput = "";
         result = 0.0;
         updateDisplay();
+        doubleD = false;
+        doubleOpp = false;
+        winCon = false;
     }
     private void updateDisplay()
     {

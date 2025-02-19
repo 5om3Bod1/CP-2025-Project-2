@@ -19,4 +19,15 @@ public class challenegeTwo : MonoBehaviour
         calcScript.Instance.startAmount = startNum;
         calcScript.Instance.endAmount = endNum;
     }
+    void Update()
+    {
+        if (Input.GetKeyDown("e")) //Multiply
+        {
+            calcScript.Instance.winCon = true;
+        }
+        else if (Input.GetKeyDown("r")) //Divide
+        {
+            calcScript.Instance.winCon = true;
+        }
+    }
 }
