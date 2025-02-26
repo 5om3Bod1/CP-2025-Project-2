@@ -14,13 +14,10 @@ public class calcScript : MonoBehaviour
     public TMP_Text start;
     public TMP_Text end;
     #endregion
-
     #region Challenges
     public int challenegeDone;
     public GameObject[] challenegeNum;
-    public GameObject youWin;
     #endregion
-
     #region Values
     public int operationAmount;
     public int operationReq;
@@ -35,6 +32,8 @@ public class calcScript : MonoBehaviour
 
     public bool winCon;
     public bool loseCon;
+
+    public GameObject congrats;
 
     public static calcScript Instance { get; private set; }
 
@@ -244,17 +243,11 @@ public class calcScript : MonoBehaviour
             }
             else if (challenegeDone == 3 && result == endAmount && loseCon != true) //Challenge #4 Done
             {
-                challenegeNum[3].SetActive(false);
-                challenegeNum[4].SetActive(true);
-                challenegeDone++;
-                clearInput();
+                congrats.SetActive(true);
             }
-            else if (challenegeDone == 4 && result == endAmount && winCon != true) //Challenge #5 Done
+            else if (challenegeDone == 4 && result == endAmount && winCon == true) //Challenge #5 Done
             {
-                challenegeNum[3].SetActive(false);
-                challenegeNum[4].SetActive(true);
-                challenegeDone++;
-                clearInput();
+                congrats.SetActive(true);
             }
         }
         else if (Input.GetKeyDown("s")) //Clear
@@ -265,7 +258,7 @@ public class calcScript : MonoBehaviour
         qOne.text = operationAmount.ToString();
         
 
-        if(challenegeDone == 0 || challenegeDone == 2 || challenegeDone == 3) //Make sure the first challenge doesn't need the winCon
+        if(challenegeDone == 0 || challenegeDone == 2 || challenegeDone == 3) //Make some challenges not need the winCon
         {
             winCon = true;
         }

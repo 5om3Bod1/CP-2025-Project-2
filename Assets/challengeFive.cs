@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class challenegeThree : MonoBehaviour
+public class challengeFive : MonoBehaviour
 {
-    //Can't add or divide and 9 inputs
+    //Must use 13 and 7 inputs
 
     public int startNum;
     public int endNum;
+
+    public bool conOne;
+    public bool conTwo;
+
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
@@ -22,15 +26,25 @@ public class challenegeThree : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown("q")) //Add
+        if (Input.anyKey)
         {
-            calcScript.Instance.loseCon = true;
-            Debug.Log("Complete");
+            if (Input.GetKeyUp("1"))
+            {
+                conOne = true;
+            }
+            else if (Input.GetKeyUp("3") && conOne == true)
+            {
+                conTwo = true;
+            }
+            else
+            {
+
+            }
         }
-        else if (Input.GetKeyDown("r")) //Divide
+        
+        if (conOne && conTwo == true)
         {
-            calcScript.Instance.loseCon = true;
-            Debug.Log("Complete");
+            calcScript.Instance.winCon = true;
         }
     }
 }
