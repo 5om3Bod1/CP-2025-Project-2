@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
+using System.IO.Ports;
+using System.Threading;
 
 public class calcScript : MonoBehaviour
 {
@@ -26,16 +27,53 @@ public class calcScript : MonoBehaviour
     
     private double result = 0.0;
     #endregion
-
+    #region Bools
     public bool doubleD; //Double Digit
     public bool doubleOpp; //Double opperations, Ex: +-
 
     public bool winCon;
     public bool loseCon;
+    #endregion
+    #region Arduino
+    int messageInt;
+
+    Thread IOThread = new Thread(DataThread);
+    private static SerialPort sp;
+    private static string incomingMsg = "";
+    #endregion
 
     public GameObject congrats;
 
     public static calcScript Instance { get; private set; }
+
+    #region portInfo
+    private static void DataThread()
+    {
+        // Mac - /dev/cu.usbmodem1101
+        // PC - COM
+        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sp.Open();
+
+        while (true)
+        {
+            incomingMsg = sp.ReadExisting();
+            Thread.Sleep(200);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (IOThread != null && IOThread.IsAlive)
+        {
+            IOThread.Abort();
+        }
+
+        if (sp != null && sp.IsOpen)
+        {
+            sp.Close();
+        }
+    }
+    #endregion
 
     private void Awake()
     {
@@ -44,12 +82,176 @@ public class calcScript : MonoBehaviour
 
     private void Start()
     {
+        IOThread.Start();
         doubleOpp = true;
     }
 
     private void Update()
     {
         #region Inputs
+        if (!string.IsNullOrEmpty(incomingMsg))
+        {
+            string trimmedMsg = incomingMsg.Trim();
+
+            if (int.TryParse(trimmedMsg, out messageInt))
+            {
+                Debug.Log(messageInt);
+
+                bool processed = false;
+
+                if (messageInt == 1)
+                {
+                    processed = true;
+
+                    currentInput += 1;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 2)
+                {
+                    processed = true;
+
+                    currentInput += 2;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 3)
+                {
+                    processed = true;
+
+                    currentInput += 3;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 4)
+                {
+                    processed = true;
+
+                    currentInput += 4;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 5)
+                {
+                    processed = true;
+
+                    currentInput += 5;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 6)
+                {
+                    processed = true;
+
+                    currentInput += 6;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 7)
+                {
+                    processed = true;
+
+                    currentInput += 7;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 8)
+                {
+                    processed = true;
+
+                    currentInput += 8;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+                else if (messageInt == 9)
+                {
+                    processed = true;
+
+                    currentInput += 9;
+                    updateDisplay();
+                    if (!doubleD)
+                    {
+                        operationAmount++;
+                        doubleD = true;
+                    }
+                    doubleOpp = false;
+                }
+
+                else if (messageInt == 10) //Add
+                {
+                    if (!doubleOpp)
+                    {
+                        currentInput += "+";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+
+                else if (messageInt == 11) //Sub
+                {
+                    if (!doubleOpp)
+                    {
+                        currentInput += "-";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+
+
+                if (processed)
+                {
+                    incomingMsg = "";
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to parse input: " + trimmedMsg);
+            }
+        }
         #region Numbers
         if (Input.GetKeyDown("0"))
         {
@@ -62,130 +264,8 @@ public class calcScript : MonoBehaviour
             }
             doubleOpp = false;
         }
-        else if (Input.GetKeyDown("1"))
-        {
-            currentInput += 1;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("2"))
-        {
-            currentInput += 2;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            currentInput += 3;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("4"))
-        {
-            currentInput += 4;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("5"))
-        {
-            currentInput += 5;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("6"))
-        {
-            currentInput += 6;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("7"))
-        {
-            currentInput += 7;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("8"))
-        {
-            currentInput += 8;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        else if (Input.GetKeyDown("9"))
-        {
-            currentInput += 9;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
         #endregion
         #region Opperations
-        else if (Input.GetKeyDown("q")) //Add
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "+";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
-
-        }
-        else if (Input.GetKeyDown("w")) //Subtract
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "-";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
-        }
         else if (Input.GetKeyDown("e")) //Multiply
         {
             if (!doubleOpp)

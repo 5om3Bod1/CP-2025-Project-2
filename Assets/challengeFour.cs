@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO.Ports;
+using System.Threading;
 
 public class challengeFour : MonoBehaviour
 {
@@ -8,6 +10,42 @@ public class challengeFour : MonoBehaviour
 
     public int startNum;
     public int endNum;
+
+    #region Arduino
+    int messageInt;
+
+    Thread IOThread = new Thread(DataThread);
+    private static SerialPort sp;
+    private static string incomingMsg = "";
+
+    private static void DataThread()
+    {
+        // Mac - /dev/cu.usbmodem1101
+        // PC - COM
+        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sp.Open();
+
+        while (true)
+        {
+            incomingMsg = sp.ReadExisting();
+            Thread.Sleep(200);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (IOThread != null && IOThread.IsAlive)
+        {
+            IOThread.Abort();
+        }
+
+        if (sp != null && sp.IsOpen)
+        {
+            sp.Close();
+        }
+    }
+    #endregion
+
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
@@ -22,15 +60,37 @@ public class challengeFour : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown("w")) //Subtract
+        if (Input.GetKeyDown("e")) //Multi
         {
             calcScript.Instance.loseCon = true;
             Debug.Log("Complete");
         }
-        else if (Input.GetKeyDown("e")) //Multiply
+
+        if (!string.IsNullOrEmpty(incomingMsg))
         {
-            calcScript.Instance.loseCon = true;
-            Debug.Log("Complete");
+            string trimmedMsg = incomingMsg.Trim();
+
+            if (int.TryParse(trimmedMsg, out messageInt))
+            {
+                Debug.Log(messageInt);
+
+                bool processed = false;
+
+                if (messageInt == 11) //Sub
+                {
+                    processed = true;
+                    calcScript.Instance.loseCon = true;
+                    Debug.Log("Complete");
+                }
+                if (processed)
+                {
+                    incomingMsg = "";
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to parse input: " + trimmedMsg);
+            }
         }
     }
 }
