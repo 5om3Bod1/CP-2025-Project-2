@@ -5,7 +5,7 @@ using TMPro;
 
 public class backUp : MonoBehaviour
 {
-    /*
+    
     #region Text
     private string currentInput = "";
 
@@ -35,7 +35,7 @@ public class backUp : MonoBehaviour
 
     public GameObject congrats;
 
-    public static calcScript Instance { get; private set; }
+    public static backUp Instance { get; private set; }
 
     private void Awake()
     {
@@ -297,5 +297,5 @@ public class backUp : MonoBehaviour
     {
         displayText.text = currentInput;
     }
-    */
+    
 }
