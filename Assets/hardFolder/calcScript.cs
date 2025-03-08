@@ -10,7 +10,7 @@ public class calcScript : MonoBehaviour
     #region Text
     private string currentInput = "";
 
-    public TextMeshProUGUI displayText;
+    public TMP_Text displayText;
     public TMP_Text qOne;
     public TMP_Text start;
     public TMP_Text end;

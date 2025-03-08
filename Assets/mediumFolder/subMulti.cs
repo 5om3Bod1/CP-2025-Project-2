@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class eAddition : MonoBehaviour
+public class subMulti : MonoBehaviour
 {
     public int[] number;
     public int endAmount;
@@ -11,6 +11,8 @@ public class eAddition : MonoBehaviour
     public TMP_Text playerString;
     public string currentInput = "";
     private string conNum;
+
+    public int qNum;
 
     private void Start()
     {
@@ -68,6 +70,11 @@ public class eAddition : MonoBehaviour
             currentInput += 9;
             updateDisplay();
         }
+        else if (Input.GetKeyDown("w")) //Subtract
+        {
+            currentInput += "-";
+            updateDisplay();
+        }
         else if (Input.GetKeyDown("a")) //Equal
         {
             winCheck();
@@ -79,11 +86,20 @@ public class eAddition : MonoBehaviour
     }
     void scramble()
     {
+        qNum = Random.Range(0, 1 + 1);
         number[0] = Random.Range(0, 10 + 1);
         number[1] = Random.Range(0, 10 + 1);
         number[2] = Random.Range(0, 10 + 1);
-        equationString.text = (number[0] + " + " + number[1] + " + " + number[2]);
-        endAmount = number[0] + number[1] + number[2];
+        if (qNum == 0)
+        {
+            equationString.text = (number[0] + " - " + number[1] + " * " + number[2]);
+            endAmount = number[0] - number[1] * number[2];
+        }
+        else if (qNum == 1)
+        {
+            equationString.text = (number[0] + " * " + number[1] + " - " + number[2]);
+            endAmount = number[0] * number[1] - number[2];
+        }
     }
     void winCheck()
     {
@@ -113,7 +129,7 @@ public class eAddition : MonoBehaviour
         updateDisplay();
     }
     private void updateDisplay()
-    { 
+    {
         playerString.text = currentInput;
     }
 }

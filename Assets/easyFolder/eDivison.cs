@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class eAddition : MonoBehaviour
+public class eDivison : MonoBehaviour
 {
     public int[] number;
-    public int endAmount;
+    public float endAmount = 0.0f;
     public TMP_Text equationString;
     public TMP_Text playerString;
     public string currentInput = "";
     private string conNum;
+
+    public int qNum;
 
     private void Start()
     {
@@ -79,11 +81,37 @@ public class eAddition : MonoBehaviour
     }
     void scramble()
     {
-        number[0] = Random.Range(0, 10 + 1);
-        number[1] = Random.Range(0, 10 + 1);
-        number[2] = Random.Range(0, 10 + 1);
-        equationString.text = (number[0] + " + " + number[1] + " + " + number[2]);
-        endAmount = number[0] + number[1] + number[2];
+        qNum = Random.Range(0, 5 + 1);
+        if(qNum == 0)
+        {
+            equationString.text = (10 + " / " + 2);
+            endAmount = 5;
+        }
+        else if (qNum == 1)
+        {
+            equationString.text = (9 + " / " + 3);
+            endAmount = 3;
+        }
+        else if (qNum == 2)
+        {
+            equationString.text = (8 + " / " + 2);
+            endAmount = 4;
+        }
+        else if (qNum == 3)
+        {
+            equationString.text = (6 + " / " + 6);
+            endAmount = 1;
+        }
+        else if (qNum == 4)
+        {
+            equationString.text = (2 + " / " + 1);
+            endAmount = 2;
+        }
+        else if (qNum == 5)
+        {
+            equationString.text = (5 + " / " + 5);
+            endAmount = 1;
+        }
     }
     void winCheck()
     {
@@ -113,7 +141,7 @@ public class eAddition : MonoBehaviour
         updateDisplay();
     }
     private void updateDisplay()
-    { 
+    {
         playerString.text = currentInput;
     }
 }
