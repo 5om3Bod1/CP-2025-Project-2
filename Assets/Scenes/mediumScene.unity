@@ -340,6 +340,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9af4d33da6e4805a16ac2c0b0449ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  number: 
+  endAmount: 0
+  equationString: {fileID: 1248654282}
+  playerString: {fileID: 554988233}
+  currentInput: 
+  qNum: 0
 --- !u!1 &554988232
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1371124700}
-  - component: {fileID: 1371124699}
+  - component: {fileID: 1371124701}
   m_Layer: 0
   m_Name: subMulti
   m_TagString: Untagged
@@ -833,24 +839,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1371124699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371124698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45b5c8f7b164b4f47860027c0d1c9f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  number: 000000000000000000000000
-  endAmount: 0
-  equationString: {fileID: 1248654282}
-  playerString: {fileID: 554988233}
-  currentInput: 
-  qNum: 0
 --- !u!4 &1371124700
 Transform:
   m_ObjectHideFlags: 0
@@ -866,6 +854,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1371124701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371124698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee012b7dee1264c36999369567f05618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 
+  endAmount: 0
+  equationString: {fileID: 1248654282}
+  playerString: {fileID: 554988233}
+  currentInput: 
+  qNum: 0
 --- !u!1 &1396250951
 GameObject:
   m_ObjectHideFlags: 0

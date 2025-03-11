@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf631dd1c9c30498b8fcc89d9fb95722, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  number: 000000000000000000000000
+  number: 0000000000000000
   endAmount: 0
   equationString: {fileID: 1897007677}
   playerString: {fileID: 392468558}

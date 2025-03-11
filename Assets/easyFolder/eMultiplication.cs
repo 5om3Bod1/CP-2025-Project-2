@@ -82,8 +82,8 @@ public class eMultiplication : MonoBehaviour
         number[0] = Random.Range(0, 10 + 1);
         number[1] = Random.Range(0, 10 + 1);
         number[2] = Random.Range(0, 10 + 1);
-        equationString.text = (number[0] + " * " + number[1] + " * " + number[2]);
-        endAmount = number[0] * number[1] * number[2];
+        equationString.text = (number[0] + " * " + number[1]);
+        endAmount = number[0] * number[1];
     }
     void winCheck()
     {
