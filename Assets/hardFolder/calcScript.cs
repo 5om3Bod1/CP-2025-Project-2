@@ -216,32 +216,6 @@ public class calcScript : MonoBehaviour
                     }
                     doubleOpp = false;
                 }
-
-                else if (messageInt == 10) //Add
-                {
-                    if (!doubleOpp)
-                    {
-                        currentInput += "+";
-                        updateDisplay();
-                        operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
-                    }
-                }
-
-                else if (messageInt == 11) //Sub
-                {
-                    if (!doubleOpp)
-                    {
-                        currentInput += "-";
-                        updateDisplay();
-                        operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
-                    }
-                }
-
-
                 if (processed)
                 {
                     incomingMsg = "";
@@ -266,6 +240,29 @@ public class calcScript : MonoBehaviour
         }
         #endregion
         #region Opperations
+        else if (Input.GetKeyDown("q")) //Add
+        {
+            if (!doubleOpp)
+            {
+                currentInput += "+";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
+        }
+
+        else if (Input.GetKeyDown("w")) //Sub
+        {
+            if (!doubleOpp)
+            {
+                currentInput += "-";
+                updateDisplay();
+                operationAmount++;
+                doubleD = false;
+                doubleOpp = true;
+            }
+        }
         else if (Input.GetKeyDown("e")) //Multiply
         {
             if (!doubleOpp)
