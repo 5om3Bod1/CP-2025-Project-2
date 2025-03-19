@@ -56,6 +56,7 @@ public class eDivison : MonoBehaviour
 
     private void Start()
     {
+        IOThread.Start();
         scramble();
     }
     private void Update()

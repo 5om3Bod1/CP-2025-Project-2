@@ -55,6 +55,7 @@ public class eAddition : MonoBehaviour
 
     private void Start()
     {
+        IOThread.Start();
         scramble();
     }
     private void Update()

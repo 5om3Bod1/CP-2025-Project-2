@@ -54,6 +54,7 @@ public class eMultiplication : MonoBehaviour
 
     private void Start()
     {
+        IOThread.Start();
         scramble();
     }
     private void Update()
