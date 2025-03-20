@@ -216,6 +216,63 @@ public class calcScript : MonoBehaviour
                     }
                     doubleOpp = false;
                 }
+                else if (messageInt == 10) //Add
+                {
+                    processed = true;
+
+                    if (!doubleOpp)
+                    {
+                        currentInput += "+";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+                else if (messageInt == 11) //Sub
+                {
+                    processed = true;
+
+                    if (!doubleOpp)
+                    {
+                        currentInput += "-";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+                else if (messageInt == 12) //Multi
+                {
+                    processed = true;
+
+                    if (!doubleOpp)
+                    {
+                        currentInput += "*";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+                else if (messageInt == 13) //Divide
+                {
+                    processed = true;
+
+                    if (!doubleOpp)
+                    {
+                        currentInput += "/";
+                        updateDisplay();
+                        operationAmount++;
+                        doubleD = false;
+                        doubleOpp = true;
+                    }
+                }
+                else if (messageInt == 15) //Clear
+                {
+                    processed = true;
+                    clearInput();
+                }
                 if (processed)
                 {
                     incomingMsg = "";
@@ -237,53 +294,6 @@ public class calcScript : MonoBehaviour
                 doubleD = true;
             }
             doubleOpp = false;
-        }
-        #endregion
-        #region Opperations
-        else if (Input.GetKeyDown("q")) //Add
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "+";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
-        }
-
-        else if (Input.GetKeyDown("w")) //Sub
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "-";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
-        }
-        else if (Input.GetKeyDown("e")) //Multiply
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "*";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
-        }
-        else if (Input.GetKeyDown("r")) //Divide
-        {
-            if (!doubleOpp)
-            {
-                currentInput += "/";
-                updateDisplay();
-                operationAmount++;
-                doubleD = false;
-                doubleOpp = true;
-            }
         }
         #endregion
         #region Other
@@ -326,10 +336,6 @@ public class calcScript : MonoBehaviour
             {
                 congrats.SetActive(true);
             }
-        }
-        else if (Input.GetKeyDown("s")) //Clear
-        {
-            clearInput();
         }
 
         qOne.text = operationAmount.ToString();
