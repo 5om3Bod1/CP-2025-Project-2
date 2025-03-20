@@ -6,7 +6,7 @@ using TMPro;
 public class mediumInput : MonoBehaviour
 {
     public string currentInput = "";
-    public TMP_Text[] playerString;
+    public TMP_Text playerString;
     public int endAmount;
     public string conNum;
     public int parNum;
@@ -146,13 +146,6 @@ public class mediumInput : MonoBehaviour
     }
     private void updateDisplay()
     {
-        if(valNum == 1)
-        {
-            //playerString[0].text = currentInput1;
-        }
-        else if(valNum == 2)
-        {
-            //playerString[1].text = currentInput2;
-        }
+        playerString.text = currentInput;
     }
 }

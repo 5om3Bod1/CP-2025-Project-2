@@ -296,6 +296,55 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 3.5}
   m_SizeDelta: {x: 6, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &389911430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 389911432}
+  - component: {fileID: 389911431}
+  m_Layer: 0
+  m_Name: inputScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &389911431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389911430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186b1f1ebc1bd6246a3d3afcf1ed8acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentInput: 
+  playerString: {fileID: 392468558}
+  endAmount: 0
+  conNum: 
+  parNum: 0
+--- !u!4 &389911432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389911430}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.93800604, y: 0.97712576, z: 482.2698}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &392468556
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +550,7 @@ MonoBehaviour:
   equationString: {fileID: 1897007677}
   playerString: {fileID: 392468558}
   currentInput: 
+  processed: 0
 --- !u!4 &550928637
 Transform:
   m_ObjectHideFlags: 0
@@ -511,6 +561,55 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &555461122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 555461124}
+  - component: {fileID: 555461123}
+  m_Layer: 0
+  m_Name: questionScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &555461123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555461122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dddab046c4fa86041ae5e8766f376c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectVersion: 0
+  selectNum: 0
+  multiDiv: 0
+  number: 000000000000000000000000
+  equationString: {fileID: 1897007677}
+--- !u!4 &555461124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555461122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.93800604, y: 0.97712576, z: 482.2698}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -550,6 +649,7 @@ MonoBehaviour:
   equationString: {fileID: 1897007677}
   playerString: {fileID: 392468558}
   currentInput: 
+  processed: 0
 --- !u!4 &774686790
 Transform:
   m_ObjectHideFlags: 0
@@ -581,7 +681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1025812915
 Transform:
   m_ObjectHideFlags: 0
@@ -614,6 +714,7 @@ MonoBehaviour:
   equationString: {fileID: 1897007677}
   playerString: {fileID: 392468558}
   currentInput: 
+  processed: 0
 --- !u!1 &1106514059
 GameObject:
   m_ObjectHideFlags: 0
@@ -649,6 +750,7 @@ MonoBehaviour:
   playerString: {fileID: 392468558}
   currentInput: 
   qNum: 0
+  processed: 0
 --- !u!4 &1106514061
 Transform:
   m_ObjectHideFlags: 0
@@ -1037,8 +1139,10 @@ SceneRoots:
   - {fileID: 1813840974}
   - {fileID: 1960935014}
   - {fileID: 209791419}
-  - {fileID: 392468557}
   - {fileID: 1897007676}
+  - {fileID: 392468557}
+  - {fileID: 555461124}
+  - {fileID: 389911432}
   - {fileID: 1025812915}
   - {fileID: 774686790}
   - {fileID: 550928637}

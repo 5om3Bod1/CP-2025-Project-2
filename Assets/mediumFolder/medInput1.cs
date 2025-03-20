@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class subMulti : MonoBehaviour
+public class medInput1 : MonoBehaviour
 {
-    public int[] number;
-    public int endAmount;
-    public TMP_Text equationString;
-    public TMP_Text playerString;
     public string currentInput = "";
-    private string conNum;
+    public TMP_Text playerString1;
+    public int endAmount;
+    public string conNum;
+    public int parNum;
 
-    public int qNum;
+    public int valNum;
 
-    private void Start()
+    public static medInput1 Instance { get; private set; }
+
+    // Start is called before the first frame update
+    void Start()
     {
-        scramble();
+        Instance = this;
     }
-    private void Update()
+
+    // Update is called once per frame
+    void Update()
     {
-        if (Input.GetKeyDown("0"))
-        {
-            currentInput += 0;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("1"))
+        if (Input.GetKeyDown("1"))
         {
             currentInput += 1;
             updateDisplay();
@@ -70,6 +69,11 @@ public class subMulti : MonoBehaviour
             currentInput += 9;
             updateDisplay();
         }
+        else if (Input.GetKeyDown("0"))
+        {
+            currentInput += 0;
+            updateDisplay();
+        }
         else if (Input.GetKeyDown("w")) //Subtract
         {
             currentInput += "-";
@@ -77,51 +81,15 @@ public class subMulti : MonoBehaviour
         }
         else if (Input.GetKeyDown("a")) //Equal
         {
-            winCheck();
+            mediumQuestion.Instance.valNum++;
+            mediumQuestion.Instance.valCheck();
         }
         else if (Input.GetKeyDown("s")) //Clear
         {
             clearInput();
+            mediumQuestion.Instance.valNum--;
+            mediumQuestion.Instance.valCheck();
         }
-    }
-    void scramble()
-    {
-        qNum = Random.Range(0, 1 + 1);
-        number[0] = Random.Range(0, 10 + 1);
-        number[1] = Random.Range(0, 10 + 1);
-        number[2] = Random.Range(0, 10 + 1);
-        if (qNum == 0)
-        {
-            equationString.text = (number[0] + " - " + number[1] + " * " + number[2]);
-            endAmount = number[0] - number[1] * number[2];
-        }
-        else if (qNum == 1)
-        {
-            equationString.text = (number[0] + " * " + number[1] + " - " + number[2]);
-            endAmount = number[0] * number[1] - number[2];
-        }
-    }
-    void winCheck()
-    {
-        conNum = endAmount.ToString();
-        Debug.Log(conNum);
-        Debug.Log(endAmount);
-        if (currentInput == conNum)
-        {
-            Debug.Log("You win!");
-            scramble();
-            clearInput();
-        }
-        else
-        {
-            tryAgain();
-        }
-    }
-    void tryAgain()
-    {
-        currentInput = "Try again!";
-        updateDisplay();
-        Invoke("clearInput", 1f);
     }
     void clearInput()
     {
@@ -130,6 +98,7 @@ public class subMulti : MonoBehaviour
     }
     private void updateDisplay()
     {
-        playerString.text = currentInput;
+        playerString1.text = currentInput;
+        mediumQuestion.Instance.answerO = currentInput;
     }
 }
