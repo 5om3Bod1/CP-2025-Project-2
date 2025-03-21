@@ -230,6 +230,8 @@ public class calcScript : MonoBehaviour
                 }
                 else if (messageInt == 14)
                 {
+                    processed = true;
+
                     calcResult();
                     doubleD = false;
                     doubleOpp = true;

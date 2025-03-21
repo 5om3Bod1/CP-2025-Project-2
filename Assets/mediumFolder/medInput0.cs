@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using System.IO.Ports;
+using System.Threading;
 
 public class medInput0 : MonoBehaviour
 {
@@ -16,86 +17,157 @@ public class medInput0 : MonoBehaviour
 
     public static medInput0 Instance { get; private set; }
 
+    #region Arduino
+    int messageInt;
+
+    Thread IOThread = new Thread(DataThread);
+    private static SerialPort sp;
+    private static string incomingMsg = "";
+    #endregion
+    #region portInfo
+    private static void DataThread()
+    {
+        // Mac - /dev/cu.usbmodem1101
+        // PC - COM
+        sp = new SerialPort("/dev/cu.usbmodem1101", 9600);
+        sp.Open();
+
+        while (true)
+        {
+            incomingMsg = sp.ReadExisting();
+            Thread.Sleep(200);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (IOThread != null && IOThread.IsAlive)
+        {
+            IOThread.Abort();
+        }
+
+        if (sp != null && sp.IsOpen)
+        {
+            sp.Close();
+        }
+    }
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
+        IOThread.Start();
         Instance = this;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("1"))
+        if (!string.IsNullOrEmpty(incomingMsg))
         {
-            currentInput += 1;
-            updateDisplay();
+            string trimmedMsg = incomingMsg.Trim();
+
+            if (int.TryParse(trimmedMsg, out messageInt))
+            {
+                Debug.Log(messageInt);
+
+                bool processed = false;
+
+                if (messageInt == 1)
+                {
+                    processed = true;
+
+                    currentInput += 1;
+                    updateDisplay();
+                }
+                else if (messageInt == 2)
+                {
+                    processed = true;
+
+                    currentInput += 2;
+                    updateDisplay();
+                }
+                else if (messageInt == 3)
+                {
+                    processed = true;
+
+                    currentInput += 3;
+                    updateDisplay();
+                }
+                else if (messageInt == 4)
+                {
+                    processed = true;
+
+                    currentInput += 4;
+                    updateDisplay();
+                }
+                else if (messageInt == 5)
+                {
+                    processed = true;
+
+                    currentInput += 5;
+                    updateDisplay();
+                }
+                else if (messageInt == 6)
+                {
+                    processed = true;
+
+                    currentInput += 6;
+                    updateDisplay();
+                }
+                else if (messageInt == 7)
+                {
+                    processed = true;
+
+                    currentInput += 7;
+                    updateDisplay();
+                }
+                else if (messageInt == 8)
+                {
+                    processed = true;
+
+                    currentInput += 8;
+                    updateDisplay();
+                }
+                else if (messageInt == 9)
+                {
+                    processed = true;
+
+                    currentInput += 9;
+                    updateDisplay();
+                }
+                else if (messageInt == 0)
+                {
+                    processed = true;
+
+                    currentInput += 0;
+                    updateDisplay();
+                }
+                else if (messageInt == 14) //Equal
+                {
+                    processed = true;
+
+                    mediumQuestion.Instance.valNum += 2;
+                    mediumQuestion.Instance.valCheck();
+                }
+                if (processed)
+                {
+                    incomingMsg = "";
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to parse input: " + trimmedMsg);
+            }
         }
-        else if (Input.GetKeyDown("2"))
-        {
-            currentInput += 2;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("3"))
-        {
-            currentInput += 3;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("4"))
-        {
-            currentInput += 4;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("5"))
-        {
-            currentInput += 5;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("6"))
-        {
-            currentInput += 6;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("7"))
-        {
-            currentInput += 7;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("8"))
-        {
-            currentInput += 8;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("9"))
-        {
-            currentInput += 9;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("0"))
-        {
-            currentInput += 0;
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("w")) //Subtract
-        {
-            currentInput += "-";
-            updateDisplay();
-        }
-        else if (Input.GetKeyDown("a")) //Equal
-        {
-            mediumQuestion.Instance.valNum+=2;
-            mediumQuestion.Instance.valCheck();
-        }
-        else if (Input.GetKeyDown("s")) //Clear
-        {
-            clearInput();
-        }
+
     }
-    void clearInput()
+    public void clearInput()
     {
         currentInput = "";
         updateDisplay();
     }
-    private void updateDisplay()
+    public void updateDisplay()
     {
         playerString0.text = currentInput;
         mediumQuestion.Instance.answerZ = currentInput;

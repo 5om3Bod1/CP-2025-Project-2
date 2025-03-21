@@ -59,10 +59,6 @@ public class mediumQuestion : MonoBehaviour
         {
             deterZero();
         }
-        else if (selectVersion == 1)
-        {
-            deterOne();
-        }
     }
 
     void deterZero() //Number input;
@@ -76,11 +72,7 @@ public class mediumQuestion : MonoBehaviour
             Debug.Log("Rerolled");
             oneNum = Random.Range(0, 3 + 1);
         }
-        equationString.text = (number[0] + " " + whichOpp[zeroNum] + "  __  " + whichOpp[oneNum] + "  __  " + "= " + number[1]);
-    }
-    void deterOne() //Opperation Input; Uses conNum
-    {
-        equationString.text = (number[0] + "  _  " + whichOpp[zeroNum] + "  _  " + whichOpp[oneNum] + " = " + number[1]);
+        equationString.text = (number[0] + " " + whichOpp[zeroNum] + "  _  " + whichOpp[oneNum] + "  _  " + "= " + number[1]);
     }
     void endCondition() //When player submits final answer
     {
