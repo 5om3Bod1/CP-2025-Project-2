@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 294587599}
   - component: {fileID: 294587598}
   - component: {fileID: 294587600}
+  - component: {fileID: 294587601}
   m_Layer: 0
   m_Name: bGround/GM
   m_TagString: Untagged
@@ -431,6 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6677ac3a3119624bae46525e27c4cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  congrats: {fileID: 2119643246}
+  currentInput: 
   displayText: {fileID: 525220237}
   qOne: {fileID: 426503463}
   start: {fileID: 627887643}
@@ -449,7 +452,18 @@ MonoBehaviour:
   doubleOpp: 0
   winCon: 0
   loseCon: 0
-  congrats: {fileID: 2119643246}
+--- !u!114 &294587601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294587597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedd08d203efd467b9fc552b471d1cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &426503462
 GameObject:
   m_ObjectHideFlags: 0

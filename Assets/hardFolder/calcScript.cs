@@ -7,11 +7,12 @@ using System.Threading;
 
 public class calcScript : MonoBehaviour
 {
+    //Number
     public GameObject congrats;
 
     public static calcScript Instance { get; private set; }
     #region Text
-    private string currentInput = "";
+    public string currentInput = "";
 
     public TMP_Text displayText;
     public TMP_Text qOne;
@@ -49,7 +50,7 @@ public class calcScript : MonoBehaviour
     {
         // Mac - /dev/cu.usbmodem1101
         // PC - COM
-        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sp = new SerialPort("/dev/cu.usbmodem1101", 9600);
         sp.Open();
 
         while (true)
@@ -214,68 +215,58 @@ public class calcScript : MonoBehaviour
                     }
                     doubleOpp = false;
                 }
-                else if (messageInt == 10) //Add
+                else if (messageInt == 0)
                 {
                     processed = true;
 
-                    if (!doubleOpp)
+                    currentInput += 0;
+                    updateDisplay();
+                    if (!doubleD)
                     {
-                        currentInput += "+";
-                        updateDisplay();
                         operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
+                        doubleD = true;
                     }
+                    doubleOpp = false;
                 }
-                else if (messageInt == 11) //Sub
+                else if (messageInt == 14)
                 {
-                    processed = true;
+                    calcResult();
+                    doubleD = false;
+                    doubleOpp = true;
 
-                    if (!doubleOpp)
+                    if (operationAmount != operationReq || winCon == false || loseCon == true)
                     {
-                        currentInput += "-";
-                        updateDisplay();
-                        operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
+                        Invoke("clearInput", 1f);
                     }
-                }
-                else if (messageInt == 12) //Multi
-                {
-                    processed = true;
-
-                    if (!doubleOpp)
+                    else if (challenegeDone == 0 && result == endAmount) //Challenege #1 Done
                     {
-                        currentInput += "*";
-                        updateDisplay();
-                        operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
+                        challenegeNum[0].SetActive(false);
+                        challenegeNum[1].SetActive(true);
+                        challenegeDone++;
+                        clearInput();
                     }
-                }
-                else if (messageInt == 13) //Divide
-                {
-                    processed = true;
-
-                    if (!doubleOpp)
+                    else if (challenegeDone == 1 && result == endAmount && winCon == true) //Challenege #2 Done
                     {
-                        currentInput += "/";
-                        updateDisplay();
-                        operationAmount++;
-                        doubleD = false;
-                        doubleOpp = true;
+                        challenegeNum[1].SetActive(false);
+                        challenegeNum[2].SetActive(true);
+                        challenegeDone++;
+                        clearInput();
                     }
-                }
-                else if (messageInt == 14) //Equal
-                {
-                    processed = true;
-
-                    Debug.Log("Enter");
-                }
-                else if (messageInt == 15) //Clear
-                {
-                    processed = true;
-                    clearInput();
+                    else if (challenegeDone == 2 && result == endAmount && loseCon != true) //Challenege #3 Done
+                    {
+                        challenegeNum[2].SetActive(false);
+                        challenegeNum[3].SetActive(true);
+                        challenegeDone++;
+                        clearInput();
+                    }
+                    else if (challenegeDone == 3 && result == endAmount && loseCon != true) //Challenge #4 Done
+                    {
+                        congrats.SetActive(true);
+                    }
+                    else if (challenegeDone == 4 && result == endAmount && winCon == true) //Challenge #5 Done
+                    {
+                        congrats.SetActive(true);
+                    }
                 }
                 if (processed)
                 {
@@ -287,60 +278,8 @@ public class calcScript : MonoBehaviour
                 Debug.LogError("Failed to parse input: " + trimmedMsg);
             }
         }
-        #region Numbers
-        if (Input.GetKeyDown("0"))
-        {
-            currentInput += 0;
-            updateDisplay();
-            if (!doubleD)
-            {
-                operationAmount++;
-                doubleD = true;
-            }
-            doubleOpp = false;
-        }
-        #endregion
-        #region Other
-        else if (Input.GetKeyDown("a")) //equal
-        {
-            calcResult();
-            doubleD = false;
-            doubleOpp = true;
 
-            if (operationAmount != operationReq || winCon == false || loseCon == true)
-            {
-                Invoke("clearInput", 1f);
-            }
-            else if(challenegeDone == 0 && result == endAmount) //Challenege #1 Done
-            {
-                challenegeNum[0].SetActive(false);
-                challenegeNum[1].SetActive(true);
-                challenegeDone++;
-                clearInput();
-            }
-            else if(challenegeDone == 1 && result == endAmount && winCon == true) //Challenege #2 Done
-            {
-                challenegeNum[1].SetActive(false);
-                challenegeNum[2].SetActive(true);
-                challenegeDone++;
-                clearInput();
-            }
-            else if (challenegeDone == 2 && result == endAmount && loseCon != true) //Challenege #3 Done
-            {
-                challenegeNum[2].SetActive(false);
-                challenegeNum[3].SetActive(true);
-                challenegeDone++;
-                clearInput();
-            }
-            else if (challenegeDone == 3 && result == endAmount && loseCon != true) //Challenge #4 Done
-            {
-                congrats.SetActive(true);
-            }
-            else if (challenegeDone == 4 && result == endAmount && winCon == true) //Challenge #5 Done
-            {
-                congrats.SetActive(true);
-            }
-        }
+        #region Other
 
         qOne.text = operationAmount.ToString();
         
@@ -369,7 +308,7 @@ public class calcScript : MonoBehaviour
             updateDisplay();
         }
     }
-    private void clearInput()
+    public void clearInput()
     {
         currentInput = "";
         result = 0.0;
@@ -380,7 +319,7 @@ public class calcScript : MonoBehaviour
         winCon = false;
         loseCon = false;
     }
-    private void updateDisplay()
+    public void updateDisplay()
     {
         displayText.text = currentInput;
     }

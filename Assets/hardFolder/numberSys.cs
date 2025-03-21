@@ -6,24 +6,25 @@ using System.Threading;
 
 public class numberSys : MonoBehaviour
 {
+    //Opperation
     #region Arduino
     int messageInt;
 
     Thread IOThread = new Thread(DataThread);
-    private static SerialPort sp;
-    private static string incomingMsg = "";
+    private static SerialPort sd;
+    private static string incomingMg = "";
     #endregion
     #region portInfo
     private static void DataThread()
     {
         // Mac - /dev/cu.usbmodem1101
         // PC - COM
-        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
-        sp.Open();
+        sd = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sd.Open();
 
         while (true)
         {
-            incomingMsg = sp.ReadExisting();
+            incomingMg = sd.ReadExisting();
             Thread.Sleep(200);
         }
     }
@@ -35,22 +36,94 @@ public class numberSys : MonoBehaviour
             IOThread.Abort();
         }
 
-        if (sp != null && sp.IsOpen)
+        if (sd != null && sd.IsOpen)
         {
-            sp.Close();
+            sd.Close();
         }
     }
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        IOThread.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (!string.IsNullOrEmpty(incomingMg))
+        {
+            string trimmedMsg = incomingMg.Trim();
+
+            if (int.TryParse(trimmedMsg, out messageInt))
+            {
+                Debug.Log(messageInt);
+
+                bool processed = false;
+
+                if (messageInt == 10) //Add
+                {
+                    processed = true;
+
+                    if (calcScript.Instance.doubleOpp == false)
+                    {
+                        calcScript.Instance.currentInput += "+";
+                        doubleCheck();
+                    }
+                }
+                else if (messageInt == 11) //Sub
+                {
+                    processed = true;
+
+                    if (calcScript.Instance.doubleOpp == false)
+                    {
+                        calcScript.Instance.currentInput += "-";
+                        doubleCheck();
+                    }
+                }
+                else if (messageInt == 12) //Multi
+                {
+                    processed = true;
+
+                    if (calcScript.Instance.doubleOpp == false)
+                    {
+                        calcScript.Instance.currentInput += "*";
+                        doubleCheck();
+                    }
+                }
+                else if (messageInt == 13) //Divide
+                {
+                    processed = true;
+
+                    if (calcScript.Instance.doubleOpp == false)
+                    {
+                        calcScript.Instance.currentInput += "/";
+                        doubleCheck();
+                    }
+                }
+                else if (messageInt == 15) //Clear
+                {
+                    processed = true;
+                    calcScript.Instance.clearInput();
+                }
+
+                if (processed)
+                {
+                    incomingMg = "";
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to parse input: " + trimmedMsg);
+            }
+        }
+    }
+
+    void doubleCheck()
+    {
+        calcScript.Instance.updateDisplay();
+        calcScript.Instance.operationAmount++;
+        calcScript.Instance.doubleD = false;
+        calcScript.Instance.doubleOpp = true;
     }
 }
