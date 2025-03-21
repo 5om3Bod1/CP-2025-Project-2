@@ -6,7 +6,7 @@ using System.Threading;
 
 public class challengeFour : MonoBehaviour
 {
-    //Can't subtract or multiply and 9 inputs
+    //Can't subtract or multiply and 6 inputs
 
     public int startNum;
     public int endNum;
@@ -15,19 +15,19 @@ public class challengeFour : MonoBehaviour
     int messageInt;
 
     Thread IOThread = new Thread(DataThread);
-    private static SerialPort sp;
-    private static string incomingMsg = "";
+    private static SerialPort sFour;
+    private static string incomingFour = "";
 
     private static void DataThread()
     {
         // Mac - /dev/cu.usbmodem1101
         // PC - COM
-        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
-        sp.Open();
+        sFour = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sFour.Open();
 
         while (true)
         {
-            incomingMsg = sp.ReadExisting();
+            incomingFour = sFour.ReadExisting();
             Thread.Sleep(200);
         }
     }
@@ -39,9 +39,9 @@ public class challengeFour : MonoBehaviour
             IOThread.Abort();
         }
 
-        if (sp != null && sp.IsOpen)
+        if (sFour != null && sFour.IsOpen)
         {
-            sp.Close();
+            sFour.Close();
         }
     }
     #endregion
@@ -49,7 +49,7 @@ public class challengeFour : MonoBehaviour
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
-        calcScript.Instance.operationReq = 7;
+        calcScript.Instance.operationReq = 6;
         startNum = Random.Range(0, 10);
         endNum = Random.Range(0, 10);
 
@@ -57,18 +57,13 @@ public class challengeFour : MonoBehaviour
         calcScript.Instance.end.text = endNum.ToString();
         calcScript.Instance.startAmount = startNum;
         calcScript.Instance.endAmount = endNum;
+        calcScript.Instance.currentInput += startNum;
     }
     void Update()
     {
-        if (Input.GetKeyDown("e")) //Multi
+        if (!string.IsNullOrEmpty(incomingFour))
         {
-            calcScript.Instance.loseCon = true;
-            Debug.Log("Complete");
-        }
-
-        if (!string.IsNullOrEmpty(incomingMsg))
-        {
-            string trimmedMsg = incomingMsg.Trim();
+            string trimmedMsg = incomingFour.Trim();
 
             if (int.TryParse(trimmedMsg, out messageInt))
             {
@@ -76,15 +71,21 @@ public class challengeFour : MonoBehaviour
 
                 bool processed = false;
 
-                if (messageInt == 11) //Sub
+                if (messageInt == 11)
                 {
                     processed = true;
+
                     calcScript.Instance.loseCon = true;
-                    Debug.Log("Complete");
+                }
+                else if (messageInt == 12)
+                {
+                    processed = true;
+
+                    calcScript.Instance.loseCon = true;
                 }
                 if (processed)
                 {
-                    incomingMsg = "";
+                    incomingFour = "";
                 }
             }
             else

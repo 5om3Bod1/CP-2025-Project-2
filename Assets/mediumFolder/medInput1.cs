@@ -147,7 +147,7 @@ public class medInput1 : MonoBehaviour
                 {
                     processed = true;
 
-                    mediumQuestion.Instance.valNum += 2;
+                    mediumQuestion.Instance.valNum ++;
                     mediumQuestion.Instance.valCheck();
                 }
                 if (processed)

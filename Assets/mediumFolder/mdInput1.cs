@@ -65,14 +65,14 @@ public class mdInput1 : MonoBehaviour
                 {
                     processed = true;
 
-                    medInput0.Instance.currentInput += "-";
-                    medInput0.Instance.updateDisplay();
+                    medInput1.Instance.currentInput += "-";
+                    medInput1.Instance.updateDisplay();
                 }
                 else if (messageInt == 15) //Clear
                 {
                     processed = true;
 
-                    medInput0.Instance.clearInput();
+                    medInput1.Instance.clearInput();
                 }
                 if (processed)
                 {

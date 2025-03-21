@@ -6,7 +6,7 @@ using System.Threading;
 
 public class challenegeThree : MonoBehaviour
 {
-    //Can't add or divide and 9 inputs
+    //Can't add or divide and 6 inputs
 
     public int startNum;
     public int endNum;
@@ -15,19 +15,19 @@ public class challenegeThree : MonoBehaviour
     int messageInt;
 
     Thread IOThread = new Thread(DataThread);
-    private static SerialPort sp;
-    private static string incomingMsg = "";
+    private static SerialPort sThree;
+    private static string incomingThree = "";
 
     private static void DataThread()
     {
         // Mac - /dev/cu.usbmodem1101
         // PC - COM
-        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
-        sp.Open();
+        sThree = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sThree.Open();
 
         while (true)
         {
-            incomingMsg = sp.ReadExisting();
+            incomingThree = sThree.ReadExisting();
             Thread.Sleep(200);
         }
     }
@@ -39,9 +39,9 @@ public class challenegeThree : MonoBehaviour
             IOThread.Abort();
         }
 
-        if (sp != null && sp.IsOpen)
+        if (sThree != null && sThree.IsOpen)
         {
-            sp.Close();
+            sThree.Close();
         }
     }
     #endregion
@@ -49,7 +49,7 @@ public class challenegeThree : MonoBehaviour
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
-        calcScript.Instance.operationReq = 7;
+        calcScript.Instance.operationReq = 6;
         startNum = Random.Range(0, 10);
         endNum = Random.Range(0, 10);
 
@@ -57,18 +57,13 @@ public class challenegeThree : MonoBehaviour
         calcScript.Instance.end.text = endNum.ToString();
         calcScript.Instance.startAmount = startNum;
         calcScript.Instance.endAmount = endNum;
+        calcScript.Instance.currentInput += startNum;
     }
     void Update()
     {
-        if (Input.GetKeyDown("r")) //Divide
+        if (!string.IsNullOrEmpty(incomingThree))
         {
-            calcScript.Instance.loseCon = true;
-            Debug.Log("Complete");
-        }
-
-        if (!string.IsNullOrEmpty(incomingMsg))
-        {
-            string trimmedMsg = incomingMsg.Trim();
+            string trimmedMsg = incomingThree.Trim();
 
             if (int.TryParse(trimmedMsg, out messageInt))
             {
@@ -80,11 +75,15 @@ public class challenegeThree : MonoBehaviour
                 {
                     processed = true;
                     calcScript.Instance.loseCon = true;
-                    Debug.Log("Complete");
+                }
+                else if (messageInt == 13) //Add
+                {
+                    processed = true;
+                    calcScript.Instance.loseCon = true;
                 }
                 if (processed)
                 {
-                    incomingMsg = "";
+                    incomingThree = "";
                 }
             }
             else

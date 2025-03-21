@@ -15,7 +15,6 @@ public class calcScript : MonoBehaviour
     public string currentInput = "";
 
     public TMP_Text displayText;
-    public TMP_Text qOne;
     public TMP_Text start;
     public TMP_Text end;
     #endregion
@@ -37,6 +36,8 @@ public class calcScript : MonoBehaviour
 
     public bool winCon;
     public bool loseCon;
+
+    public bool firstOpp;
     #endregion
     #region Arduino
     int messageInt;
@@ -82,7 +83,6 @@ public class calcScript : MonoBehaviour
     private void Start()
     {
         IOThread.Start();
-        doubleOpp = true;
     }
 
     private void Update()
@@ -98,136 +98,140 @@ public class calcScript : MonoBehaviour
 
                 bool processed = false;
 
-                if (messageInt == 1)
+                if(firstOpp == true)
                 {
-                    processed = true;
-
-                    currentInput += 1;
-                    updateDisplay();
-                    if (!doubleD)
+                    if (messageInt == 1)
                     {
-                        operationAmount++;
-                        doubleD = true;
-                    }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 2)
-                {
-                    processed = true;
+                        processed = true;
 
-                    currentInput += 2;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 1;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 3)
-                {
-                    processed = true;
+                    else if (messageInt == 2)
+                    {
+                        processed = true;
 
-                    currentInput += 3;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 2;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 4)
-                {
-                    processed = true;
+                    else if (messageInt == 3)
+                    {
+                        processed = true;
 
-                    currentInput += 4;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 3;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 5)
-                {
-                    processed = true;
+                    else if (messageInt == 4)
+                    {
+                        processed = true;
 
-                    currentInput += 5;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 4;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 6)
-                {
-                    processed = true;
+                    else if (messageInt == 5)
+                    {
+                        processed = true;
 
-                    currentInput += 6;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 5;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 7)
-                {
-                    processed = true;
+                    else if (messageInt == 6)
+                    {
+                        processed = true;
 
-                    currentInput += 7;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 6;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 8)
-                {
-                    processed = true;
+                    else if (messageInt == 7)
+                    {
+                        processed = true;
 
-                    currentInput += 8;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 7;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 9)
-                {
-                    processed = true;
+                    else if (messageInt == 8)
+                    {
+                        processed = true;
 
-                    currentInput += 9;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 8;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
-                }
-                else if (messageInt == 0)
-                {
-                    processed = true;
+                    else if (messageInt == 9)
+                    {
+                        processed = true;
 
-                    currentInput += 0;
-                    updateDisplay();
-                    if (!doubleD)
-                    {
-                        operationAmount++;
-                        doubleD = true;
+                        currentInput += 9;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
                     }
-                    doubleOpp = false;
+                    else if (messageInt == 0)
+                    {
+                        processed = true;
+
+                        currentInput += 0;
+                        updateDisplay();
+                        if (!doubleD)
+                        {
+                            operationAmount++;
+                            doubleD = true;
+                        }
+                        doubleOpp = false;
+                    }
                 }
+                
                 else if (messageInt == 14)
                 {
                     processed = true;
@@ -235,6 +239,7 @@ public class calcScript : MonoBehaviour
                     calcResult();
                     doubleD = false;
                     doubleOpp = true;
+                    firstOpp = false;
 
                     if (operationAmount != operationReq || winCon == false || loseCon == true)
                     {
@@ -282,10 +287,6 @@ public class calcScript : MonoBehaviour
         }
 
         #region Other
-
-        qOne.text = operationAmount.ToString();
-        
-
         if(challenegeDone == 0 || challenegeDone == 2 || challenegeDone == 3) //Make some challenges not need the winCon
         {
             winCon = true;
@@ -313,6 +314,8 @@ public class calcScript : MonoBehaviour
     public void clearInput()
     {
         currentInput = "";
+        currentInput += startAmount;
+        firstOpp = false;
         result = 0.0;
         operationAmount = 0;
         updateDisplay();

@@ -6,7 +6,7 @@ using System.Threading;
 
 public class challenegeTwo : MonoBehaviour
 {
-    //Must multiply or divide and 7 inputs
+    //Must multiply or divide and 6 inputs
 
     public int startNum;
     public int endNum;
@@ -15,19 +15,19 @@ public class challenegeTwo : MonoBehaviour
     int messageInt;
 
     Thread IOThread = new Thread(DataThread);
-    private static SerialPort sp;
-    private static string incomingMsg = "";
+    private static SerialPort sTwo;
+    private static string incomingTwo = "";
 
     private static void DataThread()
     {
         // Mac - /dev/cu.usbmodem1101
         // PC - COM
-        sp = new SerialPort("/dev/cu.usbmodem101", 9600);
-        sp.Open();
+        sTwo = new SerialPort("/dev/cu.usbmodem101", 9600);
+        sTwo.Open();
 
         while (true)
         {
-            incomingMsg = sp.ReadExisting();
+            incomingTwo = sTwo.ReadExisting();
             Thread.Sleep(200);
         }
     }
@@ -39,9 +39,9 @@ public class challenegeTwo : MonoBehaviour
             IOThread.Abort();
         }
 
-        if (sp != null && sp.IsOpen)
+        if (sTwo != null && sTwo.IsOpen)
         {
-            sp.Close();
+            sTwo.Close();
         }
     }
     #endregion
@@ -49,7 +49,7 @@ public class challenegeTwo : MonoBehaviour
     private void Start()
     {
         calcScript.Instance.operationAmount = 0;
-        calcScript.Instance.operationReq = 7;
+        calcScript.Instance.operationReq = 6;
         startNum = Random.Range(0, 10);
         endNum = Random.Range(0, 10);
 
@@ -57,18 +57,41 @@ public class challenegeTwo : MonoBehaviour
         calcScript.Instance.end.text = endNum.ToString();
         calcScript.Instance.startAmount = startNum;
         calcScript.Instance.endAmount = endNum;
+        calcScript.Instance.currentInput += startNum;
     }
     void Update()
     {
-        if (Input.GetKeyDown("e")) //Multiply
+        if (!string.IsNullOrEmpty(incomingTwo))
         {
-            calcScript.Instance.winCon = true;
-            Debug.Log("Complete");
-        }
-        else if (Input.GetKeyDown("r")) //Divide
-        {
-            calcScript.Instance.winCon = true;
-            Debug.Log("Complete");
+            string trimmedMsg = incomingTwo.Trim();
+
+            if (int.TryParse(trimmedMsg, out messageInt))
+            {
+                Debug.Log(messageInt);
+
+                bool processed = false;
+
+                if (messageInt == 12)
+                {
+                    processed = true;
+
+                    calcScript.Instance.winCon = true;
+                }
+                else if (messageInt == 13) //Divide
+                {
+                    processed = true;
+
+                    calcScript.Instance.winCon = true;
+                }
+                if (processed)
+                {
+                    incomingTwo = "";
+                }
+            }
+            else
+            {
+                Debug.LogError("Failed to parse input: " + trimmedMsg);
+            }
         }
     }
 }

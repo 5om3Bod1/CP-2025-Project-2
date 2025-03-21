@@ -121,7 +121,7 @@ public class mediumQuestion : MonoBehaviour
             inputObj[0].SetActive(false);
             inputObj[1].SetActive(true);
         }
-        else if(valNum == 3)
+        else if(valNum >= 3)
         {
             endCondition(); //Checks answers
         }
