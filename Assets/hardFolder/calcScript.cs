@@ -7,6 +7,9 @@ using System.Threading;
 
 public class calcScript : MonoBehaviour
 {
+    public GameObject congrats;
+
+    public static calcScript Instance { get; private set; }
     #region Text
     private string currentInput = "";
 
@@ -41,11 +44,6 @@ public class calcScript : MonoBehaviour
     private static SerialPort sp;
     private static string incomingMsg = "";
     #endregion
-
-    public GameObject congrats;
-
-    public static calcScript Instance { get; private set; }
-
     #region portInfo
     private static void DataThread()
     {
@@ -267,6 +265,12 @@ public class calcScript : MonoBehaviour
                         doubleD = false;
                         doubleOpp = true;
                     }
+                }
+                else if (messageInt == 14) //Equal
+                {
+                    processed = true;
+
+                    Debug.Log("Enter");
                 }
                 else if (messageInt == 15) //Clear
                 {
